@@ -1,0 +1,461 @@
+{
+  "person": [
+    {
+      "selfie": "150",
+      "셀카": "150",
+      "friends": "15",
+      "goodtime": "8"
+    }
+  ],
+  "bicycle": [
+    {
+      "bicycle": "21",
+      "bicyclelove": "25"
+    }
+  ],
+  "car": [
+    {
+      "car": "21",
+      "carstagram": "25"
+    }
+  ],
+  "motorcycle": [
+    {
+      "motorcycle": "21",
+      "motorcyclemafia": "21"
+    }
+  ],
+  "airplane": [
+    {
+      "airplane": "21",
+      "airplanelovers": "21"
+    }
+  ],
+  "bus": [
+    {
+      "bus": "21",
+      "buslovers": "21"
+    }
+  ],
+  "train": [
+    {
+      "train": "21",
+      "railway": "21"
+    }
+  ],
+  "truck": [
+    {
+      "truck": "21",
+      "truckmania": "25"
+    }
+  ],
+  "boat": [
+    {
+      "boat": "21",
+      "sea": "21"
+    }
+  ],
+  "traffic light": [
+    {
+      "traffic light": "21",
+      "rushhour": "21"
+    }
+  ],
+  "fire hydrant": [
+    {
+      "fire hydrant": "21"
+    }
+  ],
+  "stop sign": [
+    {
+      "stop sign": "21"
+    }
+  ],
+  "parking meter": [
+    {
+      "parking meter": "21"
+    }
+  ],
+  "bench": [
+    {
+      "bench": "21"
+    }
+  ],
+  "bird": [
+    {
+      "bird": "21",
+      "birds": "12",
+      "instabird": "21"
+    }
+  ],
+  "cat": [
+    {
+      "catstagram": "30",
+      "meow": "27",
+      "catlove": "25",
+      "집사": "30"
+    }
+  ],
+  "dog": [
+    {
+      "dog": "21",
+      "doge": "26",
+      "dogstagram": "30"
+    }
+  ],
+  "horse": [
+    {
+      "horse": "21"
+    }
+  ],
+  "sheep": [
+    {
+      "sheep": "21",
+      "farmanimals": "22",
+      "동물농장": "22"
+    }
+  ],
+  "cow": [
+    {
+      "cow": "21",
+      "farmanimals": "22"
+    }
+  ],
+  "elephant": [
+    {
+      "elephant": "21",
+      "nationalgeographic": "21"
+    }
+  ],
+  "bear": [
+    {
+      "nationalgeographic": "21",
+      "bear": "21"
+    }
+  ],
+  "zebra": [
+    {
+      "nationalgeographic": "21",
+      "zebra": "21"
+    }
+  ],
+  "giraffe": [
+    {
+      "nationalgeographic": "21",
+      "giraffe": "21"
+    }
+  ],
+  "backpack": [
+    {
+      "backpack": "21"
+    }
+  ],
+  "umbrella": [
+    {
+      "umbrella": "21",
+      "rainy": "11"
+    }
+  ],
+  "handbag": [
+    {
+      "handbag": "21",
+      "ootd": "50"
+    }
+  ],
+  "tie": [
+    {
+      "tie": "21",
+      "ootd": "50"
+    }
+  ],
+  "suitcase": [
+    {
+      "suitcase": "21"
+    }
+  ],
+  "frisbee": [
+    {
+      "frisbee": "21"
+    }
+  ],
+  "skis": [
+    {
+      "skis": "21",
+      "wintersports": "22"
+    }
+  ],
+  "snowboard": [
+    {
+      "snowboard": "21",
+      "wintersports": "22"
+    }
+  ],
+  "sports ball": [
+    {
+      "sports ball": "21"
+    }
+  ],
+  "kite": [
+    {
+      "kite": "21"
+    }
+  ],
+  "baseball bat": [
+    {
+      "baseball bat": "21"
+    }
+  ],
+  "baseball glove": [
+    {
+      "baseball glove": "21"
+    }
+  ],
+  "skateboard": [
+    {
+      "skateboard": "21"
+    }
+  ],
+  "surfboard": [
+    {
+      "surfboard": "21",
+      "summersports": "22"
+    }
+  ],
+  "tennis racket": [
+    {
+      "tennis racket": "21"
+    }
+  ],
+  "bottle": [
+    {
+      "bottle": "21"
+    }
+  ],
+  "wine glass": [
+    {
+      "wine glass": "21"
+    }
+  ],
+  "cup": [
+    {
+      "cup": "21",
+      "kitchenware": "22"
+    }
+  ],
+  "fork": [
+    {
+      "fork": "21",
+      "kitchenware": "22"
+    }
+  ],
+  "knife": [
+    {
+      "knife": "21",
+      "kitchenware": "22"
+    }
+  ],
+  "spoon": [
+    {
+      "spoon": "21",
+      "kitchenware": "22"
+    }
+  ],
+  "bowl": [
+    {
+      "bowl": "21",
+      "foodstagram": "21"
+    }
+  ],
+  "banana": [
+    {
+      "banana": "21",
+      "foodstagram": "30",
+      "fresh": "21"
+    }
+  ],
+  "apple": [
+    {
+      "apple": "21",
+      "foodstagram": "30",
+      "fresh": "21"
+    }
+  ],
+  "sandwich": [
+    {
+      "foodstagram": "30",
+      "sandwich": "21"
+    }
+  ],
+  "orange": [
+    {
+      "foodstagram": "30",
+      "orange": "21",
+      "fresh": "21"
+    }
+  ],
+  "broccoli": [
+    {
+      "diet": "30",
+      "broccoli": "21",
+      "fresh": "21"
+    }
+  ],
+  "carrot": [
+    {
+      "foodstagram": "30",
+      "carrot": "21",
+      "fresh": "21"
+    }
+  ],
+  "hot dog": [
+    {
+      "yummy": "27",
+      "foodstagram": "30",
+      "hot dog": "21"
+    }
+  ],
+  "pizza": [
+    {
+      "yummy": "27",
+      "foodstagram": "30",
+      "pizza": "21"
+    }
+  ],
+  "donut": [
+    {
+      "yummy": "27",
+      "foodstagram": "30",
+      "donut": "21"
+    }
+  ],
+  "cake": [
+    {
+      "yummy": "27",
+      "foodstagram": "30",
+      "cake": "21"
+    }
+  ],
+  "chair": [
+    {
+      "chair": "21"
+    }
+  ],
+  "couch": [
+    {
+      "couch": "21"
+    }
+  ],
+  "potted plant": [
+    {
+      "potted plant": "21"
+    }
+  ],
+  "bed": [
+    {
+      "bed": "21",
+      "cozy": "21"
+    }
+  ],
+  "dining table": [
+    {
+      "dining table": "21"
+    }
+  ],
+  "toilet": [
+    {
+      "toilet": "21"
+    }
+  ],
+  "tv": [
+    {
+      "tv": "21"
+    }
+  ],
+  "laptop": [
+    {
+      "laptop": "21",
+      "cool": "22"
+    }
+  ],
+  "mouse": [
+    {
+      "mouse": "21"
+    }
+  ],
+  "remote": [
+    {
+      "remote": "21"
+    }
+  ],
+  "keyboard": [
+    {
+      "keyboard": "21"
+    }
+  ],
+  "cell phone": [
+    {
+      "cell phone": "21"
+    }
+  ],
+  "microwave": [
+    {
+      "microwave": "21"
+    }
+  ],
+  "oven": [
+    {
+      "oven": "21"
+    }
+  ],
+  "toaster": [
+    {
+      "toaster": "21"
+    }
+  ],
+  "sink": [
+    {
+      "sink": "21"
+    }
+  ],
+  "refrigerator": [
+    {
+      "refrigerator": "21"
+    }
+  ],
+  "book": [
+    {
+      "book": "21"
+    }
+  ],
+  "clock": [
+    {
+      "clock": "21"
+    }
+  ],
+  "vase": [
+    {
+      "vase": "21"
+    }
+  ],
+  "scissors": [
+    {
+      "scissors": "21"
+    }
+  ],
+  "teddy bear": [
+    {
+      "teddy bear": "21"
+    }
+  ],
+  "hair drier": [
+    {
+      "hair drier": "21"
+    }
+  ],
+  "toothbrush": [
+    {
+      "toothbrush": "21",
+      "clean": "20"
+    }
+  ]
+}

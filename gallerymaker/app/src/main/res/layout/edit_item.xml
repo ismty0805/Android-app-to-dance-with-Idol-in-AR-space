@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp">
+
+    <ImageButton
+        android:id="@+id/edit_img"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_icon"
+        android:scaleType="fitCenter"
+        android:background="@null"/>
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_img"
+        android:layout_weight="1"
+        android:hint="name"
+        android:maxLength="9"
+        android:textColor="#666666"
+        android:textSize="18sp"
+        android:layout_margin="20dp"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:inputType="text"
+        />
+
+    <EditText
+        android:id="@+id/edit_phoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_name"
+        android:layout_weight="1"
+        android:hint="phone number"
+        android:maxLength="11"
+        android:textColor="#666666"
+        android:textSize="18sp"
+        android:layout_margin="20dp"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/edit_memo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_phoneNumber"
+        android:layout_weight="1"
+        android:hint="memo"
+        android:maxLength="30"
+        android:textColor="#666666"
+        android:textSize="18sp"
+        android:layout_margin="20dp"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:inputType="numberDecimal"
+        />
+<!--    android:inputType="text"-->
+
+    <Button
+        android:id="@+id/edit_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_memo"
+        android:layout_centerHorizontal="true"
+        android:text="Delete"
+        android:layout_margin="15dp"/>
+
+</RelativeLayout>

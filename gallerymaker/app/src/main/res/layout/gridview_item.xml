@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id = "@+id/gridview_item"
+        android:layout_width="320px"
+        android:layout_height="230px"
+        android:layout_below="@+id/grid_view">
+    </ImageView>
+</LinearLayout>

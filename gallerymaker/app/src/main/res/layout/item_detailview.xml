@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp">
+
+    <ImageView
+        android:id="@+id/detail_img"
+        android:layout_width="97dp"
+        android:layout_height="97dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_weight="1"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/detail_name"
+        android:layout_width="301dp"
+        android:layout_height="53dp"
+        android:layout_below="@+id/detail_img"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:hint="name"
+        android:layout_weight="2"
+        android:textColor="#000000"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/detail_call_img"
+        android:layout_width="74dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/detail_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:src="@drawable/call_img" />
+
+    <ImageView
+        android:id="@+id/detail_message_img"
+        android:layout_width="48dp"
+        android:layout_height="57dp"
+        android:layout_below="@+id/detail_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@id/detail_call_img"
+        android:layout_weight="1"
+        android:src="@drawable/envelope" />
+
+    <ImageView
+        android:id="@+id/detail_video_img"
+        android:layout_width="52dp"
+        android:layout_height="61dp"
+        android:layout_below="@+id/detail_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@id/detail_message_img"
+        android:layout_weight="1"
+        android:src="@drawable/video_call" />
+
+    <ImageView
+        android:id="@+id/detail_mail_img"
+        android:layout_width="65dp"
+        android:layout_height="43dp"
+        android:layout_below="@+id/detail_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@id/detail_video_img"
+        android:layout_weight="1"
+        android:src="@drawable/email" />
+
+    <EditText
+        android:id="@+id/detail_phoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_below="@+id/detail_call_img"
+        android:layout_marginTop="17dp"
+        android:layout_weight="2"
+        android:focusableInTouchMode="false"
+        android:hint="PhoneNumber"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/detail_memo"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_below="@+id/detail_phoneNumber"
+        android:layout_marginTop="-1dp"
+        android:layout_weight="1"
+        android:focusableInTouchMode="false"
+        android:hint="memo"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>

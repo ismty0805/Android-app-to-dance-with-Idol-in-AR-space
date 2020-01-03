@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,9 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".itemDetail" android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".add_item" android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".EditItemActivity" android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".FullImageActivity"></activity>
         <provider
             android:name="androidx.core.content.FileProvider"

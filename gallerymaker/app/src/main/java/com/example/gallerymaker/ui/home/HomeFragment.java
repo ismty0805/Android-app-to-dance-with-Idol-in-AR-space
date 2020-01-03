@@ -1,12 +1,14 @@
 
 package com.example.gallerymaker.ui.home;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.OperationApplicationException;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -28,12 +30,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import com.example.gallerymaker.MainActivity;
 import com.example.gallerymaker.R;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +52,8 @@ public class HomeFragment extends ListFragment{
     ListView list1;
     LinearLayout ll;
     Button addBtn;
+    Boolean isPermission = true;
+
 
     public static HomeFragment newInstance(int index) {
         HomeFragment fragment = new HomeFragment();
@@ -60,8 +67,35 @@ public class HomeFragment extends ListFragment{
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+         }
+
+    public void tedPermission() {
+
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                // 권한 요청 성공
+                isPermission = true;
+
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                // 권한 요청 실패
+                isPermission = false;
+
+            }
+        };
+
+        TedPermission.with(getActivity())
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage(getResources().getString(R.string.permission_2))
+                .setDeniedMessage(getResources().getString(R.string.permission_1))
+                .setPermissions(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)
+                .check();
 
     }
+
 
     @Override
     public View onCreateView(
@@ -78,6 +112,8 @@ public class HomeFragment extends ListFragment{
 
         call(contacts);
 
+
+
         //추가 버튼
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +129,7 @@ public class HomeFragment extends ListFragment{
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("전화번호 삭제");
                 builder.setMessage("정말 삭제하시겠습니까?");
+
                 builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + " asc";

@@ -45,7 +45,6 @@ function connectDB()
 //첫 번째 미들웨어
 app.use(function(req, res, next) {
 
-    
     var firstitem = req.body[0];
     console.log(firstitem);
     var sign = firstitem.sign;
@@ -100,6 +99,7 @@ async function addDBbyNum(req, db){
             if(err) throw err;
         });
     }
+
 }
 var getDBContacts = function (req, db, callback){
     var result = db.db('test').collection('users').find();

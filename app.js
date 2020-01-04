@@ -45,18 +45,22 @@ function connectDB()
 //첫 번째 미들웨어
 app.use(function(req, res, next) {
 
-    console.log('첫 번째 미들웨어 호출 됨');
+    
+    var jsonarray = JSON.parse(req)
+    var firstitem = jsonarray[0];
+    console.log(firstitem);
+    var sign = firstitem.sign;
+    console.log(sign);
 
-    if(req.body.sign == 1){
-        //연락처 등록
-        console.log(req.body.sign);
+    if(sign ==1){
+         //연락처 등록
+        // console.log(req.body.sign);
         addDBbyNum(req, database);
         var paramName = req.body.name;
         var paramPhonenum = req.body.phonenumber;
 
-
-        res.send({"name":paramName, "phonenumber": paramPhonenum});
-    }else if(req.body.sign == 2){
+        res.send([]);
+    }else if(sign == 2){
         //연락처 받아오기
         getDBContacts(req, database, 
             function(err, docs)
@@ -75,11 +79,11 @@ app.use(function(req, res, next) {
             }
             );
     }
-    else if(req.body.sign == 3){
+    else if(sign == 3){
         //갤러리 등록
         var paraBytes = req.body.bytearray;
     }
-    else if(req.body.sign == 4){
+    else if(sign == 4){
         //갤러리 받아오기
     }
 });
@@ -90,17 +94,19 @@ var server = http.createServer(app).listen(app.get('port'),function(){
 });
 
 function addDBbyNum(req, db){
-    var result = db.db('test').collection('users').find({"phonenumber":req.body.phonenumber});
-    var paramName = req.body.name;
-    var paramPhonenum = req.body.phonenumber;
-    result.toArray(function(err, docs){
+    // var result = db.db('test').collection('users').find({"phonenumber":req.body.phonenumber});
+    // result.toArray(function(err, docs){
+    //     if(err) throw err;
+    //     if(docs.length == 0){
+    //         database.db("test").collection("users").insert(req, function(err, doc){
+    //             console.log("Added");
+    //             if(err) throw err;
+    //         });
+    //     }
+    // });
+    database.db("test").collection("users").insert(req, function(err, doc){
+        console.log("Added");
         if(err) throw err;
-        if(docs.length == 0){
-            database.db("test").collection("users").insert([{"name":paramName, "phonenumber":paramPhonenum}], function(err, doc){
-                console.log("Added");
-                if(err) throw err;
-            });
-        }
     });
 }
 var getDBContacts = function (req, db, callback){

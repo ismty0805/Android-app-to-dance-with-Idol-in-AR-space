@@ -57,11 +57,27 @@ app.use(function(req, res, next) {
 
         res.send({"name":paramName, "phonenumber": paramPhonenum});
     }else if(req.body.sign == 2){
-        //갤러리 등록
-        var paraBytes = req.body.bytearray;
+        //연락처 받아오기
+        getDBContacts(req, database, 
+            function(err, docs)
+            {
+                if(err){
+                    console.log('Error!!!');
+                    return;
+                }
+                if(docs){
+                    res.send(docs);
+                }
+                else{
+                    console.log('empty Error!!!');
+                    res.send([]);
+                }
+            }
+            );
     }
     else if(req.body.sign == 3){
-        //연락처 받아오기
+        //갤러리 등록
+        var paraBytes = req.body.bytearray;
     }
     else if(req.body.sign == 4){
         //갤러리 받아오기
@@ -86,5 +102,23 @@ function addDBbyNum(req, db){
             });
         }
     });
-
 }
+var getDBContacts = function (req, db, callback){
+    var result = db.db('test').collection('users').find();
+    result.toArray(
+        function(err, docs)
+        {
+            if(err){
+                callback(err, null);
+                return;
+            }
+            if(docs.length>0)
+            {
+                callback(null, docs);
+            }
+            else{
+                callback(null, null);
+            }
+        }
+    );
+};

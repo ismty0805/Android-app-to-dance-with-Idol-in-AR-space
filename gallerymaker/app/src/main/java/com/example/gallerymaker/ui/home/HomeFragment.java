@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-         }
+    }
 
     public void tedPermission() {
 
@@ -249,64 +249,64 @@ public class HomeFragment extends Fragment {
 
         //JSON형식으로 데이터 통신을 진행합니다!
 
-            try {
-                //주소록 전체가 담긴 pnarr에서 전송할 각 jsonObject 생성
-                for (int i = 0; i < pnarr.length(); i++) {
-                    JSONObject phonenumjson = pnarr.getJSONObject(i);
-                    Log.d("name : ", phonenumjson.getString("name"));
-                    //데이터를 json형식으로 바꿔 넣어줌
+        try {
+            //주소록 전체가 담긴 pnarr에서 전송할 각 jsonObject 생성
+            for (int i = 0; i < pnarr.length(); i++) {
+                JSONObject phonenumjson = pnarr.getJSONObject(i);
+                Log.d("name : ", phonenumjson.getString("name"));
+                //데이터를 json형식으로 바꿔 넣어줌
 
-                    final String jsonString = phonenumjson.toString(); //완성된 json 포맷
+                final String jsonString = phonenumjson.toString(); //완성된 json 포맷
 
-                    phonenumjson.put("sign", "1");
-                    //이제 전송해볼까요?
-                                final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                                final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, phonenumjson, new Response.Listener<JSONObject>() {
-                                    //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
-                                    @Override
-                                    public void onResponse(JSONObject response) {
-                                        try {
-                                            Log.d("@@@@", "2");
+                phonenumjson.put("sign", "1");
+                //이제 전송해볼까요?
+                final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, phonenumjson, new Response.Listener<JSONObject>() {
+                    //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("@@@@", "2");
 
-                                            //받은 json형식의 응답을 받아
-                                            JSONObject jsonObject = new JSONObject(response.toString());
+                            //받은 json형식의 응답을 받아
+                            JSONObject jsonObject = new JSONObject(response.toString());
 
-                                            //key값에 따라 value값을 쪼개 받아옵니다.
-                                            String resultId = jsonObject.getString("name");
-                                            String resultPassword = jsonObject.getString("phonenum");
-                                            resultpnarr.put(jsonObject);
-                                            Log.d("@@@@",jsonObject.toString());
+                            //key값에 따라 value값을 쪼개 받아옵니다.
+                            String resultId = jsonObject.getString("name");
+                            String resultPassword = jsonObject.getString("phonenum");
+                            resultpnarr.put(jsonObject);
+                            Log.d("@@@@",jsonObject.toString());
 
-                                //만약 그 값이 같다면 로그인에 성공한 것입니다.
-                                if (resultId.equals("OK") & resultPassword.equals("OK")) {
-                                    Log.d("######", "3");
-                                    //이 곳에 성공 시 화면이동을 하는 등의 코드를 입력하시면 됩니다.
-                                } else {
-                                    Log.d("$$$$$$$$", "4");
-                                    //로그인에 실패했을 경우 실행할 코드를 입력하시면 됩니다.
-                                }
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            //만약 그 값이 같다면 로그인에 성공한 것입니다.
+                            if (resultId.equals("OK") & resultPassword.equals("OK")) {
+                                Log.d("######", "3");
+                                //이 곳에 성공 시 화면이동을 하는 등의 코드를 입력하시면 됩니다.
+                            } else {
+                                Log.d("$$$$$$$$", "4");
+                                //로그인에 실패했을 경우 실행할 코드를 입력하시면 됩니다.
                             }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                            Log.d("!!!!!", "1");
-                            //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                    requestQueue.add(jsonObjectRequest);
-                    //
-                }
+                    }
+                    //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Log.d("!!!!!", "1");
+                        //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                requestQueue.add(jsonObjectRequest);
+                //
             }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void response(ListView list1, JSONArray resultpnarr) throws JSONException {

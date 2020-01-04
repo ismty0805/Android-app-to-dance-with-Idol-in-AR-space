@@ -31,12 +31,10 @@ function connectDB()
             if (err)
             {
                 console.log('db connect error');
-                connected = 1;
                 return;
             }
  
             console.log('db was connected : ' + databaseURL);
-            connected = 1;
             database = db;          //이 구문까지 실행되었다면 ongoDB 에 연결된 것
         }
     );
@@ -48,29 +46,45 @@ function connectDB()
 app.use(function(req, res, next) {
 
     console.log('첫 번째 미들웨어 호출 됨');
-    var paramName = req.body.name;
-    var paramPhonenum = req.body.phonenumber;
-    
-    database.db("test").collection("users").insert([{"name":paramName, "phonenumber":paramPhonenum}], function(err, doc){
-        console.log("Added");
-        if(err) throw err;
-    });
 
-    var approve ={'approve_name':'NO','approve_phonenum':'NO'};
+    if(req.body.sign == 1){
+        //연락처 등록
+        console.log(req.body.sign);
+        addDBbyNum(req, database);
+        var paramName = req.body.name;
+        var paramPhonenum = req.body.phonenumber;
 
 
-    
-    console.log('id : '+paramName+'  pw : '+paramPhonenum);
-
-    //전화번호 일치여부 flag json 데이터입니다.
-    if(paramName == '권형근') approve.approve_name = 'OK';
-    if(paramPhonenum == '01064821156') approve.approve_phonenum = 'OK';
-
-    res.send(approve);
-
+        res.send({"name":paramName, "phonenumber": paramPhonenum});
+    }else if(req.body.sign == 2){
+        //갤러리 등록
+        var paraBytes = req.body.bytearray;
+    }
+    else if(req.body.sign == 3){
+        //연락처 받아오기
+    }
+    else if(req.body.sign == 4){
+        //갤러리 받아오기
+    }
 });
 
 var server = http.createServer(app).listen(app.get('port'),function(){
     connectDB();
     console.log("익스프레스로 웹 서버를 실행함 : "+ app.get('port')); 
 });
+
+function addDBbyNum(req, db){
+    var result = db.db('test').collection('users').find({"phonenumber":req.body.phonenumber});
+    var paramName = req.body.name;
+    var paramPhonenum = req.body.phonenumber;
+    result.toArray(function(err, docs){
+        if(err) throw err;
+        if(docs.length == 0){
+            database.db("test").collection("users").insert([{"name":paramName, "phonenumber":paramPhonenum}], function(err, doc){
+                console.log("Added");
+                if(err) throw err;
+            });
+        }
+    });
+
+}

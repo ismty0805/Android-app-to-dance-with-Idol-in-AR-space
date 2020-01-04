@@ -47,6 +47,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gallerymaker.MainActivity;
 import com.example.gallerymaker.R;
+import com.google.gson.JsonObject;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -206,7 +207,7 @@ public class HomeFragment extends ListFragment{
 
 
         //url 요청주소 넣는 editText를 받아 url만들기
-        String url = "http://192.249.19.252:2180";
+        String url = "http://192.249.19.252:2080";
 
         //JSON형식으로 데이터 통신을 진행합니다!
 
@@ -217,6 +218,8 @@ public class HomeFragment extends ListFragment{
                     Log.d("name : ", phonenumjson.getString("name"));
                     //데이터를 json형식으로 바꿔 넣어줌
                     String jsonString = phonenumjson.toString(); //완성된 json 포맷
+                    phonenumjson.put("sign", "1");
+//                    JsonObject obj = JSONObject.
 
                     //이제 전송해볼까요?
                     final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
@@ -225,23 +228,10 @@ public class HomeFragment extends ListFragment{
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                Log.d("@@@@", "2");
-
                                 //받은 json형식의 응답을 받아
                                 JSONObject jsonObject = new JSONObject(response.toString());
 
-                                //key값에 따라 value값을 쪼개 받아옵니다.
-                                String resultId = jsonObject.getString("approve_name");
-                                String resultPassword = jsonObject.getString("approve_phonenum");
-
-                                //만약 그 값이 같다면 로그인에 성공한 것입니다.
-                                if (resultId.equals("OK") & resultPassword.equals("OK")) {
-                                    Log.d("######", "3");
-                                    //이 곳에 성공 시 화면이동을 하는 등의 코드를 입력하시면 됩니다.
-                                } else {
-                                    Log.d("$$$$$$$$", "4");
-                                    //로그인에 실패했을 경우 실행할 코드를 입력하시면 됩니다.
-                                }
+                                Log.d("response", jsonObject.toString());
 
                             } catch (Exception e) {
                                 e.printStackTrace();

@@ -31,12 +31,10 @@ function connectDB()
             if (err)
             {
                 console.log('db connect error');
-                connected = 1;
                 return;
             }
  
             console.log('db was connected : ' + databaseURL);
-            connected = 1;
             database = db;          //이 구문까지 실행되었다면 ongoDB 에 연결된 것
         }
     );
@@ -47,30 +45,78 @@ function connectDB()
 //첫 번째 미들웨어
 app.use(function(req, res, next) {
 
-    console.log('첫 번째 미들웨어 호출 됨');
-    var paramName = req.body.name;
-    var paramPhonenum = req.body.phonenumber;
     
-    database.db("test").collection("users").insert([{"name":paramName, "phonenumber":paramPhonenum}], function(err, doc){
-        console.log("Added");
-        if(err) throw err;
-    });
+    var firstitem = req.body[0];
+    console.log(firstitem);
+    var sign = firstitem.sign;
+    console.log(sign);
+    if(sign ==1){
+         //연락처 등록
+        console.log(req.body);
+        addDBbyNum(req, database);
+        var paramName = req.body.name;
+        var paramPhonenum = req.body.phonenumber;
 
-    var approve ={'approve_name':'NO','approve_phonenum':'NO'};
-
-
-    
-    console.log('id : '+paramName+'  pw : '+paramPhonenum);
-
-    //전화번호 일치여부 flag json 데이터입니다.
-    if(paramName == '권형근') approve.approve_name = 'OK';
-    if(paramPhonenum == '01064821156') approve.approve_phonenum = 'OK';
-
-    res.send(approve);
-
+        res.send([]);
+    }else if(sign == 2){
+        //연락처 받아오기
+        getDBContacts(req, database, 
+            function(err, docs)
+            {
+                if(err){
+                    console.log('Error!!!');
+                    return;
+                }
+                if(docs){
+                    res.send(docs);
+                }
+                else{
+                    console.log('empty Error!!!');
+                    res.send([]);
+                }
+            }
+            );
+    }
+    else if(sign == 3){
+        //갤러리 등록
+        var paraBytes = req.body.bytearray;
+    }
+    else if(sign == 4){
+        //갤러리 받아오기
+    }
 });
 
 var server = http.createServer(app).listen(app.get('port'),function(){
     connectDB();
     console.log("익스프레스로 웹 서버를 실행함 : "+ app.get('port')); 
 });
+
+async function addDBbyNum(req, db){
+    var cnt = await db.db("test").collection("users").count()
+    console.log(cnt);
+    if(cnt==0){
+        db.db("test").collection("users").insertMany(req.body, function(err, doc){
+            console.log("Added");
+            if(err) throw err;
+        });
+    }
+}
+var getDBContacts = function (req, db, callback){
+    var result = db.db('test').collection('users').find();
+    result.toArray(
+        function(err, docs)
+        {
+            if(err){
+                callback(err, null);
+                return;
+            }
+            if(docs.length>0)
+            {
+                callback(null, docs);
+            }
+            else{
+                callback(null, null);
+            }
+        }
+    );
+};

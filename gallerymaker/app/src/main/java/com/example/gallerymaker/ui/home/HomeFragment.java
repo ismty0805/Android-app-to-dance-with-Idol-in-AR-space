@@ -44,10 +44,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gallerymaker.MainActivity;
 import com.example.gallerymaker.R;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -70,6 +72,7 @@ public class HomeFragment extends Fragment {
     LinearLayout ll;
     Button loadbtn;
     Boolean isPermission = true;
+    final String url = "http://192.249.19.252:2180";
 
 
     public static HomeFragment newInstance(int index) {
@@ -85,7 +88,7 @@ public class HomeFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-         }
+    }
 
     public void tedPermission() {
 
@@ -162,43 +165,43 @@ public class HomeFragment extends Fragment {
 
 
         //길게 클릭 -> 삭제알림
-        list1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("전화번호 삭제");
-                builder.setMessage("정말 삭제하시겠습니까?");
-
-                builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + " asc";
-                        Context applicationContext = getActivity().getApplicationContext();
-                        Cursor c = applicationContext.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, sortOrder);
-                        for(int i =0; i<pos+1;i++){
-                            c.moveToNext();
-                        }
-                        String deleteID = c.getString(c.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID));
-                        Log.v("long clicked", deleteID);
-                        getContext().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts.CONTACT_ID + " = " + deleteID, null);
-                        contacts.remove(pos);
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                                getActivity().getApplicationContext(), R.layout.text, contacts);
-                        adapter.notifyDataSetChanged();
-                        list1.setAdapter(adapter);
-                        Toast.makeText(getActivity().getApplicationContext(),"삭제완료",Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity().getApplicationContext(),"취소됨",Toast.LENGTH_LONG).show();
-                    }
-                });
-                builder.show();
-                return true;
-
-            }
-        });
+//        list1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                builder.setTitle("전화번호 삭제");
+//                builder.setMessage("정말 삭제하시겠습니까?");
+//
+//                builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + " asc";
+//                        Context applicationContext = getActivity().getApplicationContext();
+//                        Cursor c = applicationContext.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, sortOrder);
+//                        for(int i =0; i<pos+1;i++){
+//                            c.moveToNext();
+//                        }
+//                        String deleteID = c.getString(c.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID));
+//                        Log.v("long clicked", deleteID);
+//                        getContext().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts.CONTACT_ID + " = " + deleteID, null);
+//                        contacts.remove(pos);
+//                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+//                                getActivity().getApplicationContext(), R.layout.text, contacts);
+//                        adapter.notifyDataSetChanged();
+//                        list1.setAdapter(adapter);
+//                        Toast.makeText(getActivity().getApplicationContext(),"삭제완료",Toast.LENGTH_LONG).show();
+//                    }
+//                });
+//
+//                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        Toast.makeText(getActivity().getApplicationContext(),"취소됨",Toast.LENGTH_LONG).show();
+//                    }
+//                });
+//                builder.show();
+//                return true;
+//
+//            }
+//        });
 
         return view;
     }
@@ -228,6 +231,8 @@ public class HomeFragment extends Fragment {
             try {
                 phonenumjson.put("name",contactName);
                 phonenumjson.put("phonenumber",phNumber);
+                phonenumjson.put("sign","1");
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -243,86 +248,94 @@ public class HomeFragment extends Fragment {
 
     public void request(JSONArray pnarr, final JSONArray resultpnarr){
 
-
-        //url 요청주소 넣는 editText를 받아 url만들기
-        String url = "http://192.249.19.252:2080";
-
         //JSON형식으로 데이터 통신을 진행합니다!
+        //이제 전송해볼까요?
+        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        final JsonArrayRequest jsonarrRequest = new JsonArrayRequest(Request.Method.POST, url, pnarr, new Response.Listener<JSONArray>() {
+            //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    //받은 jsonArray형식의 응답을 받아
+                    Log.d("@@@@", "2");
+                    JSONArray result = new JSONArray(response.toString());
 
-            try {
-                //주소록 전체가 담긴 pnarr에서 전송할 각 jsonObject 생성
-                for (int i = 0; i < pnarr.length(); i++) {
-                    JSONObject phonenumjson = pnarr.getJSONObject(i);
-                    Log.d("name : ", phonenumjson.getString("name"));
-                    //데이터를 json형식으로 바꿔 넣어줌
-
-                    final String jsonString = phonenumjson.toString(); //완성된 json 포맷
-
-                    phonenumjson.put("sign", "1");
-                    //이제 전송해볼까요?
-                                final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                                final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, phonenumjson, new Response.Listener<JSONObject>() {
-                                    //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
-                                    @Override
-                                    public void onResponse(JSONObject response) {
-                                        try {
-                                            Log.d("@@@@", "2");
-
-                                            //받은 json형식의 응답을 받아
-                                            JSONObject jsonObject = new JSONObject(response.toString());
-
-                                            //key값에 따라 value값을 쪼개 받아옵니다.
-                                            String resultId = jsonObject.getString("name");
-                                            String resultPassword = jsonObject.getString("phonenum");
-                                            resultpnarr.put(jsonObject);
-                                            Log.d("@@@@",jsonObject.toString());
-
-                                //만약 그 값이 같다면 로그인에 성공한 것입니다.
-                                if (resultId.equals("OK") & resultPassword.equals("OK")) {
-                                    Log.d("######", "3");
-                                    //이 곳에 성공 시 화면이동을 하는 등의 코드를 입력하시면 됩니다.
-                                } else {
-                                    Log.d("$$$$$$$$", "4");
-                                    //로그인에 실패했을 경우 실행할 코드를 입력하시면 됩니다.
-                                }
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                            Log.d("!!!!!", "1");
-                            //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                    requestQueue.add(jsonObjectRequest);
-                    //
-                }
-            }
-                catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+            //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.d("!!!!!", "1");
+                //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        jsonarrRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonarrRequest);
+        //
     }
 
-    public void response(ListView list1, JSONArray resultpnarr) throws JSONException {
+    public void response(final ListView list1, final JSONArray resultpnarr) throws JSONException {
 
-        final ArrayList<String> resultcontacts = new ArrayList<String>();
-        for(int i=0;i<resultpnarr.length();i++){
-            JSONObject resultjson = resultpnarr.getJSONObject(i);
-            String resultname = resultjson.getString("name");
-            String resultph = resultjson.getString("phonenum");
-            resultcontacts.add("이       름 : "+ resultname + "\n"+ "전화번호 : " + resultph);
+        try {
+            //sign = 2인 json을 만듦(DB에 저장된 전화번호부 요청)
+            JSONObject request = new JSONObject();
+            request.put("sign","2");
+            JSONArray requestarr = new JSONArray();
+            requestarr.put(request);
+
+            //request를 전송
+            final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+            final JsonArrayRequest jsonarrRequest = new JsonArrayRequest(Request.Method.POST, url, requestarr, new Response.Listener<JSONArray>() {
+
+                //요청에 대한 응답
+                @Override
+                public void onResponse(JSONArray response) {
+                    try {
+                        JSONArray resultarr = new JSONArray(response.toString());
+                        Log.d("22222222", ""+response);
+                        for (int i = 0; i < resultarr.length(); i++) {
+                            JSONObject contact = resultarr.getJSONObject(i);
+                            String resultname = contact.getString("name");
+                            String resultph = contact.getString("phonenumber");
+                            resultpnarr.put(contact);
+                        }
+                        final ArrayList<String> resultcontacts = new ArrayList<String>();
+                        for(int i=0;i<resultpnarr.length();i++){
+                            JSONObject resultjson = resultpnarr.getJSONObject(i);
+                            String resultname = resultjson.getString("name");
+                            String resultph = resultjson.getString("phonenumber");
+                            resultcontacts.add("이       름 : "+ resultname + "\n"+ "전화번호 : " + resultph);
+                        }
+                        //리스트뷰로 보여주기
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                                getActivity().getApplicationContext(), R.layout.text, resultcontacts);
+                        list1.setAdapter(adapter);
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            jsonarrRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonarrRequest);
+
         }
-        //리스트뷰로 보여주기
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getActivity().getApplicationContext(), R.layout.text, resultcontacts);
-        adapter.notifyDataSetChanged();
-        list1.setAdapter(adapter);
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     void addpersonshow(final ArrayList<String> contacts){

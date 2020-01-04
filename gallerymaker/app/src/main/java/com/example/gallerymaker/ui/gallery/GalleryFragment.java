@@ -31,12 +31,23 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.gallerymaker.FullImageActivity;
 import com.example.gallerymaker.ImageAdapter;
 import com.example.gallerymaker.MainActivity;
 import com.example.gallerymaker.R;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -324,6 +335,47 @@ public class GalleryFragment extends Fragment {
             return null;
         }
     }
+//    public void request(JSONArray imagebytearray){
+//
+//
+//        //url 요청주소 넣는 editText를 받아 url만들기
+//        String url = "http://192.249.19.252:2080";
+//
+//        //JSON형식으로 데이터 통신을 진행합니다!
+//
+//        try {
+//            //주소록 전체가 담긴 pnarr에서 전송할 각 jsonObject 생성
+//            for (int i = 0; i < imagebytearray.length(); i++) {
+//
+//                final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+//                final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, sendjson, new Response.Listener<JSONObject>() {
+//                    //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try {
+//
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        error.printStackTrace();
+//                        //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//                requestQueue.add(jsonObjectRequest);
+//                //
+//            }
+//        }
+//        catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     /**
      *  권한 설정
      */

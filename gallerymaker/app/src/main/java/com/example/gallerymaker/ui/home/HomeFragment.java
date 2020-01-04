@@ -48,6 +48,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gallerymaker.MainActivity;
 import com.example.gallerymaker.R;
+import com.google.gson.JsonObject;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -244,7 +245,7 @@ public class HomeFragment extends Fragment {
 
 
         //url 요청주소 넣는 editText를 받아 url만들기
-        String url = "http://192.249.19.252:2180";
+        String url = "http://192.249.19.252:2080";
 
         //JSON형식으로 데이터 통신을 진행합니다!
 
@@ -254,8 +255,10 @@ public class HomeFragment extends Fragment {
                     JSONObject phonenumjson = pnarr.getJSONObject(i);
                     Log.d("name : ", phonenumjson.getString("name"));
                     //데이터를 json형식으로 바꿔 넣어줌
+
                     final String jsonString = phonenumjson.toString(); //완성된 json 포맷
 
+                    phonenumjson.put("sign", "1");
                     //이제 전송해볼까요?
                                 final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
                                 final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, phonenumjson, new Response.Listener<JSONObject>() {

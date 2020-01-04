@@ -56,28 +56,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         Log.d("start", "~");
-
-//        read assets file(initialize) -> 주석처리
-        Log.d("@@@@@@@@@@@@@@00", "Don't!!!!!!!!!!!!!!!!!!!!");
-        String json = "";
-        try {
-            InputStream is = getResources().getAssets().open("phone_Book.txt");
-            int fileSize = is.available();
-
-            byte[] buffer = new byte[fileSize];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-            Log.d("asset json", json);
-
-            BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "phoneBook.txt", false));
-            bw.write(json);
-            bw.close();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

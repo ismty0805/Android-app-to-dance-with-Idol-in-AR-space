@@ -18,6 +18,9 @@ import android.provider.ContactsContract;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,10 +38,21 @@ import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.gallerymaker.MainActivity;
 import com.example.gallerymaker.R;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +63,7 @@ import java.util.Collections;
 public class HomeFragment extends ListFragment{
 
     private static final String ARG_SECTION_NUMBER = "section_number";
+    final ArrayList<String> contacts = new ArrayList<String>();
     ListView list1;
     LinearLayout ll;
     Button addBtn;
@@ -67,6 +82,7 @@ public class HomeFragment extends ListFragment{
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
          }
 
     public void tedPermission() {
@@ -96,6 +112,36 @@ public class HomeFragment extends ListFragment{
 
     }
 
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.add_bar, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        switch (item.getItemId()){
+            case R.id.add_bar:
+                addpersonshow(contacts);
+//                final CharSequence[] galorcam = {"갤러리", "카메라"};
+//                AlertDialog.Builder oDialog = new AlertDialog.Builder(getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+//                oDialog.setTitle("사진 가져오기")
+//                        .setItems(galorcam, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                String selectedText = galorcam[which].toString();
+//                                if(selectedText == "갤러리"){
+//                                    if(isPermission) goToAlbum();
+//                                    else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+//                                }
+//                                else{
+//                                    if(isPermission)  takePhoto();
+//                                    else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+//                                }
+//                            }
+//                        })
+//                        .show();
+        }
+        return true;
+    }
+
 
     @Override
     public View onCreateView(
@@ -105,23 +151,15 @@ public class HomeFragment extends ListFragment{
         LinearLayoutManager llm = new LinearLayoutManager(view.getContext());
         ll = (LinearLayout) view.findViewById(R.id.LinearLayout1);
         list1 = (ListView) view.findViewById(android.R.id.list);
-        addBtn = (Button) view.findViewById(R.id.addperson);
 
         //전화번호부에서 번호 가져오기
-        final ArrayList<String> contacts = new ArrayList<String>();
 
-        call(contacts);
+        JSONArray pnarr = new JSONArray();
+
+        call(contacts, pnarr);
+        request(pnarr);
 
 
-
-        //추가 버튼
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                addpersonshow(contacts);
-            }
-        });
         //길게 클릭 -> 삭제알림
         list1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -161,9 +199,71 @@ public class HomeFragment extends ListFragment{
             }
         });
 
-
-
         return view;
+    }
+
+    public void request(JSONArray pnarr){
+
+
+        //url 요청주소 넣는 editText를 받아 url만들기
+        String url = "http://192.249.19.252:2180";
+
+        //JSON형식으로 데이터 통신을 진행합니다!
+
+            try {
+                //주소록 전체가 담긴 pnarr에서 전송할 각 jsonObject 생성
+                for (int i = 0; i < pnarr.length(); i++) {
+                    JSONObject phonenumjson = pnarr.getJSONObject(i);
+                    Log.d("name : ", phonenumjson.getString("name"));
+                    //데이터를 json형식으로 바꿔 넣어줌
+                    String jsonString = phonenumjson.toString(); //완성된 json 포맷
+
+                    //이제 전송해볼까요?
+                    final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                    final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, phonenumjson, new Response.Listener<JSONObject>() {
+                        //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Log.d("@@@@", "2");
+
+                                //받은 json형식의 응답을 받아
+                                JSONObject jsonObject = new JSONObject(response.toString());
+
+                                //key값에 따라 value값을 쪼개 받아옵니다.
+                                String resultId = jsonObject.getString("approve_name");
+                                String resultPassword = jsonObject.getString("approve_phonenum");
+
+                                //만약 그 값이 같다면 로그인에 성공한 것입니다.
+                                if (resultId.equals("OK") & resultPassword.equals("OK")) {
+                                    Log.d("######", "3");
+                                    //이 곳에 성공 시 화면이동을 하는 등의 코드를 입력하시면 됩니다.
+                                } else {
+                                    Log.d("$$$$$$$$", "4");
+                                    //로그인에 실패했을 경우 실행할 코드를 입력하시면 됩니다.
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            Log.d("!!!!!", "1");
+                            //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    requestQueue.add(jsonObjectRequest);
+                    //
+                }
+            }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
     }
 
     void addpersonshow(final ArrayList<String> contacts){
@@ -222,16 +322,20 @@ public class HomeFragment extends ListFragment{
 
     }
 
-    public void call(ArrayList<String> contacts){
+    public void call(ArrayList<String> contacts, JSONArray pnarr){
         String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + " asc";
         Context applicationContext = getActivity().getApplicationContext();
         Cursor c = applicationContext.getContentResolver().query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
                 null, null, sortOrder);
+
         while (c.moveToNext()) {
+
+            JSONObject phonenumjson = new JSONObject();
             String contactName = c
                     .getString(c
                             .getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+
             String phNumber = c
                     .getString(c
                             .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
@@ -239,13 +343,25 @@ public class HomeFragment extends ListFragment{
                     .getString(c
                             .getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
 
+            try {
+                phonenumjson.put("name",contactName);
+                phonenumjson.put("phonenumber",phNumber);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            pnarr.put(phonenumjson);
+
             contacts.add("이       름 : "+ contactName + "\n"+ "전화번호 : " + phNumber);
         }
         c.close();
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity().getApplicationContext(), R.layout.text, contacts);
         adapter.notifyDataSetChanged();
         list1.setAdapter(adapter);
+
+
     }
 
     public void ContactAdd(String name, String phonenum){

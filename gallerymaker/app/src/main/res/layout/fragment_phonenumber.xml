@@ -7,11 +7,19 @@
     android:weightSum="10"
     android:orientation="vertical" >
 
+    <Button
+        android:id="@+id/load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="10sp"
+        android:text="Load Contacts"
+        android:textSize="30dp" />
+
     <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9.3"
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:cacheColorHint="#ffccff"
         android:divider="#808080"
         android:dividerHeight="2sp"

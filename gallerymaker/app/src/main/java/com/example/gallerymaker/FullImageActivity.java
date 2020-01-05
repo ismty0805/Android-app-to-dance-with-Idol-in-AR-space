@@ -2,7 +2,9 @@ package com.example.gallerymaker;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -10,7 +12,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.gallerymaker.ui.gallery.GalleryFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 public class FullImageActivity extends AppCompatActivity {
@@ -53,6 +69,7 @@ public class FullImageActivity extends AppCompatActivity {
         }
 
 
+
     public void onClick_delete(View view){
         position = pager.getCurrentItem();
         new AlertDialog.Builder(this)
@@ -63,7 +80,19 @@ public class FullImageActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                       //확인시
-                        GalleryFragment.imageAdapterinfrag.gridviewimages.remove(GalleryFragment.imageAdapterinfrag.gridviewimages.get(position));
+                        Bitmap eraseBitmap = GalleryFragment.imageAdapterinfrag.gridviewimages.get(position);
+                        GalleryFragment.imageAdapterinfrag.gridviewimages.remove(eraseBitmap);
+                        byte[] bytes = getByteArrayFromBitmap(eraseBitmap);
+                        JSONObject obj =  new JSONObject();
+                        try {
+                            obj.put("img", Arrays.toString(bytes));
+                            obj.put("sign", 5);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        JSONArray erasearray = new JSONArray();
+                        erasearray.put(obj);
+                        erase(erasearray);
                         pager.setAdapter(adapter);
                         if(position==GalleryFragment.imageAdapterinfrag.getCount()){
                             position-=1;
@@ -83,6 +112,42 @@ public class FullImageActivity extends AppCompatActivity {
                   }
                 })
                 .show();
+    }
+    private byte[] getByteArrayFromBitmap(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+    public void erase(JSONArray array){
+        //JSON형식으로 데이터 통신을 진행합니다!
+        String url = "http://192.249.19.252:2080";
+        //이제 전송해볼까요?
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+        final JsonArrayRequest jsonarrRequest = new JsonArrayRequest(Request.Method.POST, url, array, new Response.Listener<JSONArray>() {
+            //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    //받은 jsonArray형식의 응답을 받아
+                    Log.d("@@@@", "2");
+                    JSONArray result = new JSONArray(response.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.d("!!!!!", "1");
+                //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        jsonarrRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonarrRequest);
+        //
     }
 
 }

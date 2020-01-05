@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -33,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
@@ -49,6 +51,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gallerymaker.MainActivity;
 import com.example.gallerymaker.R;
+import com.facebook.AccessToken;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.gun0912.tedpermission.PermissionListener;
@@ -59,7 +62,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -72,7 +86,7 @@ public class HomeFragment extends Fragment {
     LinearLayout ll;
     Button loadbtn;
     Boolean isPermission = true;
-    final String url = "http://192.249.19.252:2180";
+    final String url = "http://192.249.19.252:2080";
 
 
     public static HomeFragment newInstance(int index) {
@@ -130,15 +144,62 @@ public class HomeFragment extends Fragment {
     }
 
 
+    private  CallbackManager callbackManager;
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         View view = inflater.inflate(R.layout.fragment_phonenumber,container,false);
         LinearLayoutManager llm = new LinearLayoutManager(view.getContext());
+        callbackManager = CallbackManager.Factory.create();
+
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        final boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+
         ll = (LinearLayout) view.findViewById(R.id.LinearLayout1);
         list1 = (ListView) view.findViewById(R.id.list);
         loadbtn = (Button) view.findViewById(R.id.load);
+
+        final LoginButton loginButton = (LoginButton) view.findViewById(R.id.login_button);
+        if(isLoggedIn){
+            loadbtn.setVisibility(View.VISIBLE);
+        }
+        else{
+            loadbtn.setVisibility(View.INVISIBLE);
+        }
+        loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
+        loginButton.setFragment(this);
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        loadbtn.setVisibility(View.VISIBLE);
+                        Log.v("result",object.toString());
+                    }
+                });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,birthday");
+                graphRequest.setParameters(parameters);
+                graphRequest.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("logout?", "aa");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.e("LoginErr",error.toString());
+            }
+        });
+
 
         //전화번호부에서 번호 가져와서 서버로 전송
 
@@ -206,6 +267,16 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     public void call(JSONArray pnarr){
         String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + " asc";

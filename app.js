@@ -13,7 +13,8 @@ var app = express();
 
 app.set('port',80);
 app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 var database;
  
@@ -53,8 +54,6 @@ app.use(function(req, res, next) {
          //연락처 등록
         console.log(req.body);
         addDBbyNum(req, database);
-        var paramName = req.body.name;
-        var paramPhonenum = req.body.phonenumber;
 
         res.send([]);
     }else if(sign == 2){
@@ -78,29 +77,55 @@ app.use(function(req, res, next) {
     }
     else if(sign == 3){
         //갤러리 등록
-        var paraBytes = req.body.bytearray;
+        addDBImg(req, database)
+        res.send([]);
     }
     else if(sign == 4){
         //갤러리 받아오기
+        getDBGallery(req, database, 
+            function(err, docs)
+            {
+                if(err){
+                    console.log('Error!!!');
+                    return;
+                }
+                if(docs){
+                    console.log("ok sending imagearray");
+                    res.send(docs);
+                }
+                else{
+                    console.log('empty Error!!!');
+                    res.send([]);
+                }
+            }
+            );
+    }else if(sign == 5){
+        //갤러리 지우기
+        eraseDBGallery(req, database);
+        res.send([]);
     }
 });
-
 var server = http.createServer(app).listen(app.get('port'),function(){
     connectDB();
     console.log("익스프레스로 웹 서버를 실행함 : "+ app.get('port')); 
+    
+    
 });
+
 
 async function addDBbyNum(req, db){
     var cnt = await db.db("test").collection("users").count()
     console.log(cnt);
     if(cnt==0){
         db.db("test").collection("users").insertMany(req.body, function(err, doc){
-            console.log("Added");
+            console.log("Added Contact");
             if(err) throw err;
         });
     }
 
 }
+
+
 var getDBContacts = function (req, db, callback){
     var result = db.db('test').collection('users').find();
     result.toArray(
@@ -120,3 +145,32 @@ var getDBContacts = function (req, db, callback){
         }
     );
 };
+var getDBGallery = function (req, db, callback){
+    var result = db.db('test').collection('gallery').find();
+    result.toArray(
+        function(err, docs)
+        {
+            if(err){
+                callback(err, null);
+                return;
+            }
+            if(docs.length>0)
+            {
+                callback(null, docs);
+            }
+            else{
+                callback(null, null);
+            }
+        }
+    );
+};
+function addDBImg(req, db){
+    db.db("test").collection("gallery").insertMany(req.body, function(err, doc){
+        console.log("Added Img");
+        if(err) throw err;
+    });
+
+}
+function eraseDBGallery(req, db){
+    db.db('test').collection('gallery').removeOne({"img":req.body[0].img});
+}

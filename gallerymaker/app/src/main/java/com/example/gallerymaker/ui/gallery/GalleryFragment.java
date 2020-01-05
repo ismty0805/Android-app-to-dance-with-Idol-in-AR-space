@@ -23,8 +23,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,12 +38,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gallerymaker.FullImageActivity;
 import com.example.gallerymaker.ImageAdapter;
 import com.example.gallerymaker.MainActivity;
 import com.example.gallerymaker.R;
+import com.google.gson.JsonObject;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -49,10 +53,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 public class GalleryFragment extends Fragment {
     private static final String TAG = "몰입캠프";
@@ -64,6 +78,7 @@ public class GalleryFragment extends Fragment {
     private File tempFile;
     private GridView gridView;
     private View gridviewitem;
+    final String url = "http://192.249.19.252:2080";
     public static ImageAdapter imageAdapterinfrag;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +89,32 @@ public class GalleryFragment extends Fragment {
         gridviewitem = inflater.inflate(R.layout.gridview_item, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
         imageAdapterinfrag = ((MainActivity)getActivity()).imageAdapter;
+        Log.d("length", ""+imageAdapterinfrag.getCount());
         // Instance of ImageAdapter Class
         gridView.setAdapter(imageAdapterinfrag);
+
+////        jsonarray에 기본 이미지 추가
+//        JSONArray jsonArray = new JSONArray();
+//        JSONArray resultarray = null;
+//        for(int i= 1; i<22; i++){
+//            String tmpSign = "pic_" + i;
+//            Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getApplicationContext().getResources(), getResources().getIdentifier(tmpSign, "drawable", getActivity().getPackageName()));
+////            bitmap = Bitmap.createScaledBitmap(bitmap, 340, 250, true);
+//            byte[] bytes = getByteArrayFromBitmap(bitmap);
+//            JSONObject obj =  new JSONObject();
+//            try {
+//                obj.put("img", Arrays.toString(bytes));
+//                obj.put("sign", 3);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            jsonArray.put(obj);
+//        }
+//        //db에 추가
+//        request(jsonArray);
+//        String tmpSign = "pic_" + 1;
+//      Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getApplicationContext().getResources(), getResources().getIdentifier(tmpSign, "drawable", getActivity().getPackageName()));
+//        postData(bitmap);
 
         /**
          * On Click event for Single Gridview Item
@@ -95,8 +134,148 @@ public class GalleryFragment extends Fragment {
         return view;
     }
 
+    public static void postData(Bitmap imageToSend) {
+        try
+        {
+            URL url = new URL("http://192.249.19.252:2080/upload-image");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            conn.setRequestProperty("Connection", "Keep-Alive");
+            conn.setRequestProperty("Cache-Control", "no-cache");
+
+            conn.setReadTimeout(35000);
+            conn.setConnectTimeout(35000);
+
+            // directly let .compress write binary image data
+            // to the output-stream
+            OutputStream os = conn.getOutputStream();
+            imageToSend.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            conn.setRequestProperty("Content-Type", "multipart/form-data");
+            conn.setFixedLengthStreamingMode(1024);
+            os.flush();
+            os.close();
+
+            System.out.println("Response Code: " + conn.getResponseCode());
+
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            Log.d("sdfs", "sfsd");
+            BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((line = responseStreamReader.readLine()) != null)
+                stringBuilder.append(line).append("\n");
+            responseStreamReader.close();
+
+            String response = stringBuilder.toString();
+            System.out.println(response);
+
+            conn.disconnect();
+        }
+        catch(MalformedURLException e) {
+            e.printStackTrace();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void request(JSONArray pnarr){
+        //JSON형식으로 데이터 통신을 진행합니다!
+        //이제 전송해볼까요?
+        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        final JsonArrayRequest jsonarrRequest = new JsonArrayRequest(Request.Method.POST, url, pnarr, new Response.Listener<JSONArray>() {
+            //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    //받은 jsonArray형식의 응답을 받아
+                    Log.d("@@@@", "2");
+                    JSONArray result = new JSONArray(response.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.d("!!!!!", "1");
+                //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        jsonarrRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonarrRequest);
+        //
+    }
+
+//    public void response(final ArrayList<Bitmap> arrayList, final JSONArray resultpnarr) throws JSONException {
+//
+//        try {
+//            //sign = 2인 json을 만듦(DB에 저장된 갤러리 요청)
+//            JSONObject request = new JSONObject();
+//            request.put("sign","4");
+//            JSONArray requestarr = new JSONArray();
+//            requestarr.put(request);
+//
+//            //request를 전송
+//            final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+//            final JsonArrayRequest jsonarrRequest = new JsonArrayRequest(Request.Method.POST, url, requestarr, new Response.Listener<JSONArray>() {
+//
+//                //요청에 대한 응답
+//                @Override
+//                public void onResponse(JSONArray response) {
+//                    try {
+//                        JSONArray resultarr = new JSONArray(response.toString());
+//                        Log.d("22222222", ""+response);
+//                        for (int i = 0; i < resultarr.length(); i++) {
+//                            JSONObject image = resultarr.getJSONObject(i);
+//                            String byteArray = image.getString("img");
+//                            Bitmap bitmap = getBitmapFromString(byteArray);
+//                            arrayList.add(bitmap);
+//                        }
+//                    } catch (JSONException ex) {
+//                        ex.printStackTrace();
+//                    }
+//                }
+//
+//                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다
+//            }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    error.printStackTrace();
+//                    //Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//            jsonarrRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//            requestQueue.add(jsonarrRequest);
+//
+//        }
+//        catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+    private Bitmap getBitmapFromString(String string){
+        String[] bytevalues = string.substring(1, string.length() -1).split(",");
+        byte[] bytes = new byte[bytevalues.length];
+        for(int j=0, len=bytes.length; j<len; j++){
+            bytes[j] = Byte.parseByte(bytevalues[j].trim());
+        }
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        return bitmap;
+    }
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.gallerymenubar, menu);
+    }
+
+    private byte[] getByteArrayFromBitmap(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
@@ -258,6 +437,7 @@ public class GalleryFragment extends Fragment {
 
         ImageView imageView = gridviewitem.findViewById(R.id.gridview_item);
 
+
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
         ExifInterface exif = null;
@@ -276,6 +456,18 @@ public class GalleryFragment extends Fragment {
         imageView.setLayoutParams(new GridView.LayoutParams(320, 230));
 
         ((MainActivity)getActivity()).imageAdapter.gridviewimages.add(bmRotated);
+        Bitmap bitmap = Bitmap.createScaledBitmap(bmRotated, 340, 250, true);
+        JSONArray jsonArray = new JSONArray();
+        byte[] bytes = getByteArrayFromBitmap(bitmap);
+        JSONObject obj =  new JSONObject();
+        try {
+                obj.put("img", Arrays.toString(bytes));
+                obj.put("sign", 3);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            jsonArray.put(obj);
+        request(jsonArray);
         gridView.setAdapter(((MainActivity)getActivity()).imageAdapter);
         /**
          *  tempFile 사용 후 null 처리를 해줘야 합니다.
@@ -288,10 +480,6 @@ public class GalleryFragment extends Fragment {
         tempFile = null;
 
     }
-
-
-
-
 
     public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
         Matrix matrix = new Matrix();
@@ -375,7 +563,6 @@ public class GalleryFragment extends Fragment {
 //            e.printStackTrace();
 //        }
 //    }
-
     /**
      *  권한 설정
      */
@@ -405,5 +592,4 @@ public class GalleryFragment extends Fragment {
                 .check();
 
     }
-
 }

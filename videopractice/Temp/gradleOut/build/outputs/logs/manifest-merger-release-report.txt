@@ -1,0 +1,205 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12
+MERGED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:17:1-46:12
+MERGED from [:unityrecorder-release:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\aa466a8906080eff8d4d1cab37ad06bf\AndroidManifest.xml:2:1-14:12
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:2:1-17:12
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12
+	package
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:70-115
+		INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+		INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12
+		INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12
+		INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:11-69
+	android:installLocation
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:116-156
+application
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:3:3-15:17
+MERGED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:30:5-44:19
+MERGED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:30:5-44:19
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:14:5-15:19
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:14:5-15:19
+	android:label
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:3:16-48
+	android:debuggable
+		ADDED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:14:18-44
+	android:roundIcon
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:3:49-91
+	android:icon
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:3:92-123
+activity#com.setik.kampertee.AndroidUtils
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:4:5-9:16
+	android:label
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:4:63-95
+	android:configChanges
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:4:96-253
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:4:15-62
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:5:7-8:23
+action#android.intent.action.MAIN
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:6:9-61
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:6:17-58
+category#android.intent.category.LAUNCHER
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:7:9-69
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:7:19-66
+meta-data#unityplayer.SkipPermissionsDialog
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:10:5-88
+	android:value
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:10:65-85
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:10:16-64
+meta-data#unity.build-id
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:11:5-101
+	android:value
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:11:46-98
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:11:16-45
+meta-data#unity.splash-mode
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:12:5-69
+	android:value
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:12:49-66
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:12:16-48
+meta-data#unity.splash-enable
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:13:5-74
+	android:value
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:13:51-71
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:13:16-50
+meta-data#com.google.ar.core
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:14:5-77
+	android:value
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:14:50-74
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:14:16-49
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:16:3-77
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:16:20-74
+uses-feature#0x00020000
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:17:3-52
+	android:glEsVersion
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:17:17-49
+uses-permission#android.permission.INTERNET
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:18:3-65
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:9:5-67
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:9:5-67
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:18:20-62
+uses-permission#android.permission.CAMERA
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:19:3-63
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:10:5-65
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:10:5-65
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:19:20-60
+uses-feature#android.hardware.camera
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:20:3-83
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:7:5-60
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:7:5-60
+	android:required
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:20:56-80
+		MERGED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:20:56-80
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:20:17-55
+uses-feature#android.hardware.camera.autofocus
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:21:3-93
+	android:required
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:21:66-90
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:21:17-65
+uses-feature#android.hardware.camera.front
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:22:3-89
+	android:required
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:22:62-86
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:22:17-61
+uses-feature#android.hardware.touchscreen
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:23:3-88
+	android:required
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:23:61-85
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:23:17-60
+uses-feature#android.hardware.touchscreen.multitouch
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:24:3-99
+	android:required
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:24:72-96
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:24:17-71
+uses-feature#android.hardware.touchscreen.multitouch.distinct
+ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:25:3-108
+	android:required
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:25:81-105
+	android:name
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:25:17-80
+uses-sdk
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+MERGED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:26:5-28:41
+MERGED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:26:5-28:41
+MERGED from [:unityrecorder-release:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\aa466a8906080eff8d4d1cab37ad06bf\AndroidManifest.xml:7:5-9:41
+MERGED from [:unityrecorder-release:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\aa466a8906080eff8d4d1cab37ad06bf\AndroidManifest.xml:7:5-9:41
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+		INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+		ADDED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+		INJECTED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml
+meta-data#com.google.ar.core.min_apk_version
+ADDED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:33:9-35:41
+	android:value
+		ADDED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:35:13-38
+	android:name
+		ADDED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:34:13-62
+activity#com.google.ar.core.InstallActivity
+ADDED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:37:9-43:80
+	android:excludeFromRecents
+		ADDED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:40:13-46
+	android:launchMode
+		ADDED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:42:13-43
+	android:exported
+		ADDED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:41:13-37
+	android:configChanges
+		ADDED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:39:13-74
+	android:theme
+		ADDED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:43:13-77
+	android:name
+		ADDED from [:core-1.7.0:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\d1050f3a8f5750291e48ee4ae9ff47ae\AndroidManifest.xml:38:13-62
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from [:unityrecorder-release:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\aa466a8906080eff8d4d1cab37ad06bf\AndroidManifest.xml:11:5-81
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:12:5-81
+MERGED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:12:5-81
+	android:name
+		ADDED from [:unityrecorder-release:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\aa466a8906080eff8d4d1cab37ad06bf\AndroidManifest.xml:11:22-78
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from [:unityrecorder-release:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\aa466a8906080eff8d4d1cab37ad06bf\AndroidManifest.xml:12:5-71
+	android:name
+		ADDED from [:unityrecorder-release:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\aa466a8906080eff8d4d1cab37ad06bf\AndroidManifest.xml:12:22-68
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+IMPLIED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12 reason: com.setik.kampertee requested WRITE_EXTERNAL_STORAGE
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:11:5-79
+	android:name
+		ADDED from [:VuforiaWrapper:] C:\Users\q\.gradle\caches\transforms-2\files-2.1\b75579dc4bad64e0fc61ac19c01a7426\AndroidManifest.xml:11:22-76
+uses-permission#android.permission.READ_PHONE_STATE
+IMPLIED from D:\unitywork\videopractice\Temp\gradleOut\src\main\AndroidManifest.xml:2:1-26:12 reason: com.vuforia.engine.app has a targetSdkVersion < 4
